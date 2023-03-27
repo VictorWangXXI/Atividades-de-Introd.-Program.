@@ -1,0 +1,79 @@
+
+using System;
+class Matricula {
+    
+    private int mat;
+    private int digito;
+    private int[] matrículaVetor=new int[6];
+    
+    public Matricula (int mat)
+    {
+        this.mat=mat;
+    }
+    ~Matricula(){}
+    
+    //Métodos get e set
+    public int getNumeroMatricula (){return mat;}
+    public void setNumeroMatricula (int mat) {this.mat=mat;}
+    
+    public void ConersorIntParaVetor() //cria um vetor a partir do inteiro
+    {    
+        int sobra, c=0, organizador=0;
+    
+        sobra=this.mat;
+    
+        for (int k=100000; k>=1; k=(k/10))
+        {
+            for (int i=0; i<10; i++)
+            {
+                if (sobra<k)
+                {
+                matrículaVetor[organizador]=c;
+                organizador++;
+                break;
+                }
+                c++;
+                sobra=sobra-k;
+            }
+            c=0;
+        }
+    }
+    
+    public int Digito()
+    {
+        int adicao=0, resto;
+        
+        //Multiplicação
+        for (int i=0; i<6; i++)
+        matrículaVetor[i]=matrículaVetor[i]*(7-(i*1));
+        
+        //Soma das parcelas
+        for (int i=0; i<6; i++)
+        {adicao=adicao+matrículaVetor[i];}
+
+        resto=adicao%11;
+    
+        digito=11-resto;
+        
+        if (digito==10) {digito=0; return digito;}
+        else
+        { 
+            if (digito==11) {digito=0; return digito;}
+            else {return digito;}
+        }
+    }
+    
+  static void Main() {
+    
+    int mat;  
+    
+    Console.WriteLine("Digite a matrícula de 6 dígitos:");
+    mat=int.Parse(Console.ReadLine());
+    
+    Matricula aluno=new Matricula(mat);
+    
+    aluno.ConersorIntParaVetor();
+    
+    Console.WriteLine("Matrícula com dígito: {0}-{1}", aluno.getNumeroMatricula(), aluno.Digito());
+  }
+}
